@@ -4,7 +4,7 @@ const db = require("../database/database");
 function findAll() {
   const users = db
     .prepare(
-      `SELECT id, name, email, login, active FROM users ORDER BY name ASC`
+      `SELECT id, name, email, login, active FROM users ORDER BY name ASC`,
     )
     .all();
   return users.map((user) => ({
@@ -48,31 +48,37 @@ function findByLogin(login) {
 
 // Cadastrar usuário
 function create(user) {
-   const {id, name, email, login, password_hash} = user
+  const { id, name, email, login, password_hash } = user;
   const result = db
-    .prepare(`INSERT INTO users(id, name, email, login, password_hash) VALUES(?, ?, ?, ?, ?)`)
+    .prepare(
+      `INSERT INTO users(id, name, email, login, password_hash) VALUES(?, ?, ?, ?, ?)`
+    )
     .run(id, name, email, login, password_hash);
 
-    if(result.changes !== 1){
-        throw new Error("Não foi possível cadastrar o usuário");        
-    }
+  if (result.changes !== 1) {
+    throw new Error("Não foi possível cadastrar o usuário");
+  }
 
-  return true;
+  const createdUser = db.prepare(`SELECT id, name, email, login FROM users WHERE id = ?`).get(id);
 
+  return createdUser;
 }
 
 // Atualizar usuário
 function updateUser(id, user) {
-  const {name, email, login} = user
+  const { name, email, login } = user;
   const result = db
     .prepare(`UPDATE users SET name = ?, email = ?, login = ? WHERE id = ?`)
     .run(name, email, login, id);
 
-    if(result.changes !== 1){
-        throw new Error("Não foi possível atualizar o usuário ");        
-    }
+  if (result.changes !== 1) {
+    throw new Error("Não foi possível atualizar o usuário");
+  }
 
-  return true;
+  const createdUser = db.prepare(`SELECT id, name, email, login FROM users WHERE id = ?`).get(id);
+
+  return createdUser;
+
 }
 
 // Atualizar senha do usuário
@@ -81,24 +87,20 @@ function updatePassword(id, password_hash) {
     .prepare(`UPDATE users SET password_hash = ? WHERE id = ?`)
     .run(password_hash, id);
 
-    if(result.changes !== 1){
-        throw new Error("Não foi possível atualizar a senha");
-        
-    }
+  if (result.changes !== 1) {
+    throw new Error("Não foi possível atualizar a senha");
+  }
 
   return true;
 }
 
 // Excluir usuário
 function remove(id) {
-    const result = db
-    .prepare(`DELETE FROM users WHERE id = ?`)
-    .run(id);
+  const result = db.prepare(`DELETE FROM users WHERE id = ?`).run(id);
 
-    if(result.changes !== 1){
-        throw new Error("Não foi possível remover o usuário");
-        
-    }
+  if (result.changes !== 1) {
+    throw new Error("Não foi possível remover o usuário");
+  }
 
   return true;
 }
@@ -111,5 +113,5 @@ module.exports = {
   create,
   updateUser,
   updatePassword,
-  remove
+  remove,
 };
