@@ -61,7 +61,7 @@ function create(user) {
 
   const createdUser = db.prepare(`SELECT id, name, email, login FROM users WHERE id = ?`).get(id);
 
-  return createdUser;
+  return {...createdUser, active: user.active === 1 };
 }
 
 // Atualizar usuário
@@ -75,9 +75,9 @@ function updateUser(id, user) {
     throw new Error("Não foi possível atualizar o usuário");
   }
 
-  const createdUser = db.prepare(`SELECT id, name, email, login FROM users WHERE id = ?`).get(id);
+  const updatedUser = db.prepare(`SELECT id, name, email, login FROM users WHERE id = ?`).get(id);
 
-  return createdUser;
+  return {...updatedUser, active: user.active === 1 };
 
 }
 

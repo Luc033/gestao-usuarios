@@ -16,7 +16,7 @@ router.get('/:id', userController.getUserById);
 router.put('/:id', userController.updateUser);
 
 // Atualizar senha do usuário
-router.patch('/:id', userController.updatePassword);
+router.patch('/:id/password', userController.updatePassword);
 
 // Excluir usuário
 router.delete('/:id', userController.deleteUser);

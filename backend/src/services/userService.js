@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const userRepository = require("../repositories/userRepository");
 const AppError = require("../errors/AppError");
+const crypto = require("node:crypto");
 
 // Função para validar preenchimento e formatação nos campos obrigatórios
 function validateUserFields(user) {
@@ -49,7 +50,7 @@ function checkUserConflict(user, userId = null) {
   }
 
   // Verifica se o email já existe
-  const emailExist = userRepository.findByLogin(String(user.email).trim().toLowerCase());
+  const emailExist = userRepository.findByEmail(String(user.email).trim().toLowerCase());
 
   if (emailExist && emailExist.id !== userId) {
     errors.push({
@@ -98,14 +99,14 @@ async function createUser(user) {
   }
 
   // Gera o hash da senha
-  const passwordHash = await bcrypt.hash(user.password, 12);
+  const passwordHash = await bcrypt.hash(String(user.password), 12);
 
   // Cria um novo objeto com os dados tratados para ser persistidos no banco
   const newUser = {
     id: crypto.randomUUID(),
-    name: user.name.trim().toLowerCase(),
-    email: user.email.trim().toLowerCase(),
-    login: user.login.trim().toLowerCase(),
+    name: String(user.name).trim().toLowerCase(),
+    email: String(user.email).trim().toLowerCase(),
+    login: String(user.login).trim().toLowerCase(),
     password_hash: passwordHash,
   };
 

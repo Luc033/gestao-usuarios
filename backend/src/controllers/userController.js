@@ -1,5 +1,6 @@
 const userService = require("../services/userService");
 
+
 async function createUser(req, res, next) {
   try {
     const user = await userService.createUser(req.body);
@@ -59,7 +60,7 @@ async function deleteUser(req, res, next) {
   try {
     const { id } = req.params;
 
-    await userService.deleteUser(id, req.body);
+    await userService.deleteUser(id);
 
     return res.status(204).send();
   } catch (error) {
