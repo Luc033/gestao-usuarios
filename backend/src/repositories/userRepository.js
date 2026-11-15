@@ -38,7 +38,7 @@ function findByEmail(email) {
 // Buscar usuário pelo login
 function findByLogin(login) {
   const user = db
-    .prepare(`SELECT id, name, email, login, active FROM users WHERE email = ?`)
+    .prepare(`SELECT id, name, email, login, active FROM users WHERE login = ?`)
     .get(login);
 
   if (!user) return undefined;

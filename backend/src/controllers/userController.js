@@ -26,11 +26,6 @@ async function getUserById(req, res, next) {
 
     return res.status(200).json(user);
   } catch (error) {
-    if(error.message === "Usuário não encontrado."){
-        return res.status(404).json({
-            message: error.message
-        });
-    }
     next(error);
   }
 }
@@ -43,11 +38,7 @@ async function updateUser(req, res, next) {
 
     return res.status(200).json(user);
   } catch (error) {
-    if(error.message === "Usuário não encontrado."){
-        return res.status(404).json({
-            message: error.message
-        });
-    }
+
     next(error);
   }
 }
@@ -60,11 +51,6 @@ async function updatePassword(req, res, next) {
 
     return res.status(204).send();
   } catch (error) {
-    if(error.message === "Usuário não encontrado."){
-        return res.status(404).json({
-            message: error.message
-        });
-    }
     next(error);
   }
 }
@@ -77,23 +63,9 @@ async function deleteUser(req, res, next) {
 
     return res.status(204).send();
   } catch (error) {
-    if(error.message === "Usuário não encontrado."){
-        return res.status(404).json({
-            message: error.message
-        });
-    }
     next(error);
   }
 }
-
-
-
-
-
-
-
-
-
 
 module.exports = {
   createUser,

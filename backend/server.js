@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-
 const userRoutes = require('./src/routes/userRoutes');
+const errorHandler = require("./src/middleware/erroHandler");
+
 
 const app = express();
 const PORT = 3001;
@@ -28,22 +29,7 @@ app.use((req, res) => {
 });
 
 // Tratamento centralizado de erros
-app.use((error, req, res, next) => {
-    console.error(error);
-    
-    if(error.type === 'entity.parse.failed'){
-        return res.status(400).json({
-            error: 'JSON inválido.'
-        })
-    }
-
-    const status = error.status || 500;
-    return res.status(status).json({
-        error: status === 500 
-        ? 'Internal server error.'
-        : error.message
-    });
-})
+app.use(errorHandler)
 
 // inicializa o servidor
 app.listen(PORT, () => {
