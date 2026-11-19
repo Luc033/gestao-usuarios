@@ -1,4 +1,7 @@
+import showToast from "./toast";
+
 const API_URL = 'http://localhost:3001';
+
 
 async function request(endpoint, options = {}) {
     const response = await fetch(`${API_URL}${endpoint}`, {
@@ -9,12 +12,12 @@ async function request(endpoint, options = {}) {
         }
     });
 
-    if(response.status === 204) return null;
+    if(response.status === 204) return showToast(" ");
 
     const data = await response.json().catch(() => null);
 
     if(!response.ok){
-        throw new Error(data?.error || 'Ocorreu um erro na requisição.');
+        showToast(data?.error || 'Ocorreu um erro na requisição.', "error");
     }
 
     return data;    
@@ -30,7 +33,8 @@ export const userApi = {
         return request(`/users/${id}`, { method: 'PUT', body: JSON.stringify(user)});
     },
     updatePassword(id, password){
-        return request(`users/${id}/password`, {method: 'PATCH', body: JSON.stringify(password)});
+        return request(`/users/${id}/password`, {method: 'PATCH', body: JSON.stringify(password)});
     },
-    remove(id) { return request(`users/${id}`, {method: 'DELETE'}); }
+    remove(id) { return request(`/users/${id}`, {method: 'DELETE'}); }
 };
+
