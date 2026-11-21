@@ -102,7 +102,7 @@ async function createUser(user) {
   if (checkConflicts.length > 0) {
     throw new AppError(
       "Existem conflitos nos dados informados.",
-      409,
+      400,
       checkConflicts,
     );
   }
@@ -161,7 +161,7 @@ function updateUser(id, user) {
   if (checkConflicts.length > 0) {
     throw new AppError(
       "Existem conflitos nos dados informados.",
-      409,
+      400,
       checkConflicts,
     );
   }
