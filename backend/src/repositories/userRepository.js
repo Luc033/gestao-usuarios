@@ -66,10 +66,10 @@ function create(user) {
 
 // Atualizar usuário
 function updateUser(id, user) {
-  const { name, email, login } = user;
+  const { active, name, email, login } = user;
   const result = db
-    .prepare(`UPDATE users SET name = ?, email = ?, login = ? WHERE id = ?`)
-    .run(name, email, login, id);
+    .prepare(`UPDATE users SET active = ?, name = ?, email = ?, login = ? WHERE id = ?`)
+    .run(active, name, email, login, id);
 
   if (result.changes !== 1) {
     throw new Error("Não foi possível atualizar o usuário");

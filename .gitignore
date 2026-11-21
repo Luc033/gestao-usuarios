@@ -1,5 +1,152 @@
+
+# ==========================================
+# DEPENDÊNCIAS
+# ==========================================
+
 node_modules/
-.vscode
+.pnp/
+.pnp.js
+
+# Cache de gerenciadores de pacotes
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/install-state.gz
+.yarn/build-state.yml
+
+# ==========================================
+# CONFIGURAÇÕES LOCAIS E IDEs
+# ==========================================
+
+.vscode/
+.idea/
+.fleet/
+.history/
+*.code-workspace
+*.sublime-workspace
+
+# ==========================================
+# AGENTES DE INTELIGÊNCIA ARTIFICIAL
+# ==========================================
+
+.claude/
+.cursor/
+.codex/
+.gemini/
+.continue/
+.windsurf/
+.roo/
+.trae/
+.opencode/
+.ai/
+.agents/cache/
+.cline/
+.kilocode/
+.augment/
+.amazonq/
+.junie/
+.copilot/
+
+# Arquivos locais do Aider
+.aider*
+
+# ==========================================
+# VARIÁVEIS DE AMBIENTE E CREDENCIAIS
+# ==========================================
+
 .env
-.sqlite
+.env.*
+!.env.example
+!.env.example.*
+
+secrets/
+credentials/
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+
+# ==========================================
+# BANCO DE DADOS E DADOS LOCAIS
+# ==========================================
+
 backend/data/
+
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+# ==========================================
+# CACHE E ARQUIVOS TEMPORÁRIOS
+# ==========================================
+
+.cache/
+**/.cache/
+.tmp/
+**/.tmp/
+temp/
+tmp/
+*.tmp
+*.temp
+*.bak
+*.log
+*.cache
+*.swp
+*.swo
+*~
+
+# ==========================================
+# CACHE DE FERRAMENTAS DE DESENVOLVIMENTO
+# ==========================================
+
+.vite/
+.turbo/
+.next/
+.parcel-cache/
+.rollup.cache/
+.eslintcache
+.stylelintcache
+.rpt2_cache/
+coverage/
+.nyc_output/
+*.tsbuildinfo
+
+# ==========================================
+# ARQUIVOS GERADOS E BUILDS
+# ==========================================
+
+dist/
+build/
+out/
+.output/
+target/
+.vercel/
+.netlify/
+.serverless/
+
+# ==========================================
+# LOGS DE GERENCIADORES DE PACOTES
+# ==========================================
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ==========================================
+# SISTEMA OPERACIONAL
+# ==========================================
+
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini

@@ -1,4 +1,7 @@
+let timeout;
+
 function showToast(message, type = "success") {
+  clearTimeout(timeout);
   const types = {
     success: {
       icon: "bi-check-circle-fill",
@@ -42,7 +45,7 @@ function showToast(message, type = "success") {
       break;
 
     default:
-        console.error("Erro ao exibir o toast.")
+      console.error("Erro ao exibir o toast.");
       break;
   }
 
@@ -55,11 +58,10 @@ function showToast(message, type = "success") {
 
   const body = document.querySelector("body");
   body.appendChild(toastContainer);
-  
-  setTimeout( () => {
+
+  timeout = setTimeout(() => {
     toastContainer.remove();
   }, 3000);
 }
-
 
 export default showToast;

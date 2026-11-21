@@ -1,6 +1,48 @@
-.txt-truncate{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px;
+:root{
+  --pale-red: rgb(250, 199, 199);
+}
+
+.txt-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.readonly {
+  pointer-events: none;
+  user-select: none;
+  background-color: #f0f0f0;
+  color: #555;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.input-error {
+  border: 1px solid #dc3545;
+  background-color: #fff5f5;
+  outline: none;
+}
+
+.input-error:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2);
+}
+
+.spinning {
+  display: inline-block;
+
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bg-pale-red{
+  background-color: var(--pale-red);
 }

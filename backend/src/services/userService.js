@@ -11,13 +11,20 @@ function validateUserFields(user) {
   // senha deve ter no minimo 8 caracteres
   const errors = [];
 
+  if (user.active !== 0 && user.active !== 1) {
+    errors.push({
+      field: "active",
+      message: "Active deve ser um valor entre 0 e 1.",
+    });
+  }
+
   if (!user.name || String(user.name).trim().length < 3) {
     errors.push({
-      field: "nome",
+      field: "name",
       message: "O nome deve possuir pelo menos 3 caracteres.",
     });
   }
-  
+
   if (!user.login || String(user.login).trim().length < 3) {
     errors.push({
       field: "login",
@@ -39,20 +46,22 @@ function validateUserFields(user) {
 function checkUserConflict(user, userId = null) {
   const errors = [];
 
-  // Verifica se login já existe
-  const loginExist = userRepository.findByLogin(String(user.login).trim().toLowerCase());
+  const loginExist = userRepository.findByLogin(
+    String(user.login).trim().toLowerCase()
+  );
 
-  if (loginExist && loginExist.id !== userId) {
+  if (loginExist && loginExist.id !== String(userId)) {
     errors.push({
       field: "login",
       message: "O login informado já foi utilizado.",
     });
   }
 
-  // Verifica se o email já existe
-  const emailExist = userRepository.findByEmail(String(user.email).trim().toLowerCase());
+  const emailExist = userRepository.findByEmail(
+    String(user.email).trim().toLowerCase()
+  );
 
-  if (emailExist && emailExist.id !== userId) {
+  if (emailExist && emailExist.id !== String(userId)) {
     errors.push({
       field: "email",
       message: "O email informado já foi utilizado.",
@@ -104,6 +113,7 @@ async function createUser(user) {
   // Cria um novo objeto com os dados tratados para ser persistidos no banco
   const newUser = {
     id: crypto.randomUUID(),
+    active: Number(user.active),
     name: String(user.name).trim().toLowerCase(),
     email: String(user.email).trim().toLowerCase(),
     login: String(user.login).trim().toLowerCase(),
@@ -158,6 +168,8 @@ function updateUser(id, user) {
 
   // Dados da requisição foram tratados, será feito a persistencia e atualização do cadastro no banco
   const updateUser = {
+    active: Number(user.active),
+    name: String(user.name).trim().toLowerCase(),
     name: String(user.name).trim().toLowerCase(),
     email: String(user.email).trim().toLowerCase(),
     login: String(user.login).trim().toLowerCase(),
@@ -177,7 +189,11 @@ async function updatePassword(id, password) {
   const validationErrors = validatePassword(password);
 
   if (validationErrors.length > 0) {
-    throw new AppError("A senha deve possuir pelo menos 8 caracteres.", 400, validationErrors);
+    throw new AppError(
+      "A senha deve possuir pelo menos 8 caracteres.",
+      400,
+      validationErrors,
+    );
   }
 
   // Gera o hash da senha
